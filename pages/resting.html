@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>brain Test</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div id="setting">
+        <br>第几次训练：<input id="index">
+        <br>睁眼时间<input id="open_time">
+        <br>闭眼时间<input id="close_time">
+        <br><button onclick="set()">确定</button>
+        <script>
+            var index, open_time, close_time
+
+            function set() {
+                index = document.getElementById("index").value
+                open_time = document.getElementById("open_time").value
+                close_time = document.getElementById("close_time").value
+                var setting = document.getElementById("setting")
+                setting.style.visibility = "hidden"
+                document.getElementById("intro-1").style.visibility = "visible"
+
+                setTimeout(function() {
+                    document.getElementById("intro-1").style.visibility = "hidden"
+                    document.getElementById("+").style.visibility = "visible"
+                }, 2000)
+
+
+                setTimeout(function() {
+                    document.getElementById("+").style.visibility = "hidden"
+                    document.getElementById("intro-2").style.visibility = "visible"
+                }, 2000 + 60 * open_time * 1000)
+
+                setTimeout(function() {
+                    document.getElementById("intro-2").style.visibility = "hidden"
+                    document.getElementById("+").style.visibility = "visible"
+                }, 2000 + 60 * open_time * 1000 + 2000)
+
+                setTimeout(function() {
+                    document.getElementById("+").style.visibility = "hidden"
+                    document.getElementById("end").style.visibility = "visible"
+                }, 2000 + 60 * open_time * 1000 + 2000 + 60 * close_time * 1000)
+            }
+        </script>
+    </div>
+
+    <div id="intro-1" style="visibility: hidden;">
+        在下面的训练中，请注意屏幕中央的“+”并尽量保持身体稳定
+    </div>
+    <div id="+" style="visibility: hidden;">
+        +
+    </div>
+    <div id="intro-2" style="visibility: hidden;">
+        训练结束在下面的训练中，请闭上眼睛放松
+    </div>
+    <div id="end" style="visibility: hidden;">
+        <a href="./task.html">返回</a>
+        <a href="../index.html">结束</a>
+    </div>
+
+
+</body>
+
+</html>

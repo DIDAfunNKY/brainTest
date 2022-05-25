@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>brain Test</title>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <div id="setting">
+        <br>第几次训练：<input id="index">
+        <br>观察学习次数<input id="observe_times">
+        <br>连续训练次数<input id="continue_train_times">
+        <br>总训练次数<input id="total_times">
+        <br><button onclick="set()">确定</button>
+        <script>
+            var index, observe_times, continue_train_times, total_times
+
+            var sleep = function(time) {
+                var startTime = new Date().getTime() + parseInt(time, 10);
+                while (new Date().getTime() < startTime) {}
+            };
+
+            function set() {
+                index = document.getElementById("index").value
+                observe_times = document.getElementById("observe_times").value
+                continue_train_times = document.getElementById("continue_train_times").value
+                total_times = document.getElementById("total_times").value
+
+                var setting = document.getElementById("setting")
+                setting.style.visibility = "hidden"
+                document.getElementById("intro-study").style.visibility = "visible"
+                var times = observe_times;
+
+                var play_intro_train = false
+                var play_train = false
+                var training = false
+                setTimeout(function() {
+                    document.getElementById("intro-study").style.visibility = "hidden"
+                    document.getElementById("video").style.visibility = "visible"
+                    document.getElementById("video").play()
+                    setInterval(function() {
+                        if (!play_intro_train) {
+                            if (times > 0) {
+                                if (document.getElementById("video").ended) {
+                                    document.getElementById("video").play()
+                                    times = times - 1
+                                }
+                            } else {
+                                document.getElementById("video").pause()
+                                play_intro_train = true;
+                            }
+                        }
+
+                    }, 500)
+                }, 1000)
+
+                setInterval(function() {
+                    if (play_intro_train && !play_train) {
+
+                        document.getElementById("intro-train").style.visibility = "visible"
+                        document.getElementById("video").style.visibility = "hidden"
+                        setTimeout(function() {
+                            document.getElementById("intro-train").style.visibility = "hidden"
+                            play_train = true;
+                            times = continue_train_times
+                        }, 1000)
+                    }
+                }, 500)
+
+                setInterval(function() {
+                    if (play_train && times > 0 && !training) {
+                        document.getElementById("prepare").style.visibility = "visible"
+                        setTimeout(function() {
+                            document.getElementById("prepare").style.visibility = "hidden"
+                            document.getElementById("imagination").style.visibility = "visible"
+                        }, 2000)
+                        setTimeout(function() {
+                            document.getElementById("imagination").style.visibility = "hidden"
+                            document.getElementById("rest").style.visibility = "visible"
+                        }, 6000)
+                        setTimeout(function() {
+                            document.getElementById("rest").style.visibility = "hidden"
+                        }, 8000)
+                        training = true
+                        setTimeout(function() {
+                            training = false;
+                            times = times - 1;
+                        }, 8000)
+                    }
+                    if (times <= 0)
+                        document.getElementById("end").style.visibility = "visible"
+
+
+                }, 500)
+
+
+
+            }
+        </script>
+    </div>
+
+    <div id="intro-study" style="visibility: hidden;">
+        请仔细观察视频中得运动，并在大脑中练习该运动
+    </div>
+    <div id="+" style="visibility: hidden;">
+        +
+    </div>
+    <div id="intro-train" style="visibility: hidden;">
+        在下面的训练中，当看到“准备”两个字，请保持稳定，注视屏幕，当看到提示 手 集中注意，并想象自己做这个运动
+    </div>
+    <div id="prepare" style="visibility: hidden;">准备</div>
+    <div id="imagination" style="visibility: hidden;">想象</div>
+    <div id="rest" style="visibility: hidden;">休息</div>
+    <div id="end" style="visibility: hidden;">
+        <a href="./task.html">返回</a>
+        <a href="../index.html">结束</a>
+    </div>
+    <video width="320" height="240" id="video" style="visibility: hidden;">
+        <source src="../movie.mp4" type="video/mp4">
+      </video>
+    <div id="end" style="visibility: hidden;">
+        <a href="./task.html">返回</a>
+        <a href="../index.html">结束</a>
+    </div>
+</body>
+
+</html>
